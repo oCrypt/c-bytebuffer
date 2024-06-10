@@ -32,7 +32,7 @@ bool writeByte(char value, ByteBuffer* buffer) {
     return true;
 }
 
-bool writeInt(int value, ByteBuffer* buffer) {
+bool writeVarInt(int value, ByteBuffer* buffer) {
     while (true) {
         char c = value & 0x7F;
 
@@ -60,7 +60,7 @@ char read(ByteBuffer* buffer) {
     return value;
 }
 
-int readInt(ByteBuffer* buffer) {
+int readVarInt(ByteBuffer* buffer) {
     int index = 0;
     int value = 0;
     while (index < 4) {
