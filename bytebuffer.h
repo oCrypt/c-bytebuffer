@@ -7,9 +7,13 @@ ByteBuffer* createBuffer(int maxSize);
 
 bool writeByte(char value, ByteBuffer* buffer);
 
+bool writeInt(int value, ByteBuffer* buffer);
+
 bool writeVarInt(int value, ByteBuffer* buffer);
 
 char read(ByteBuffer* buffer);
+
+int readInt(ByteBuffer* buffer);
 
 int readVarInt(ByteBuffer* buffer);
 
