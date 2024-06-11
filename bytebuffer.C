@@ -32,9 +32,17 @@ bool writeByte(char value, ByteBuffer* buffer) {
     return true;
 }
 
+bool writeInt(int value, ByteBuffer* buffer) {
+    for (int i = 0; i < 4; i++) {
+        unsigned char c = (value >> (i * 8)) & 0xFF;
+        printf("%d\n", c);
+        writeByte(c, buffer);
+    }
+}
+
 bool writeVarInt(int value, ByteBuffer* buffer) {
     while (true) {
-        char c = value & 0x7F;
+        unsigned char c = value & 0x7F;
 
         if ((value = value >> 7) == 0) {
             writeByte(c, buffer);
@@ -60,11 +68,24 @@ char read(ByteBuffer* buffer) {
     return value;
 }
 
+int readInt(ByteBuffer* buffer) {
+    int value = 0;
+    int index = 0;
+    while (index < 4) {
+        unsigned char c = read(buffer);
+        printf("%d\n", c);
+        value |= (c << (index * 8));
+        index++;
+    }
+
+    return value;
+}
+
 int readVarInt(ByteBuffer* buffer) {
     int index = 0;
     int value = 0;
     while (index < 4) {
-        char c = read(buffer);
+        unsigned char c = read(buffer);
 
         if (c == '\0') {
             break;
